@@ -21,10 +21,14 @@ steps:
 #     testResultsFiles: '**/surefire-reports/TEST-*.xml'
 #     goals: 'test -Dtest=FirstTest'
     
-- task: DockerCompose@0
+# - task: DockerCompose@0
+#   inputs:
+#     containerregistrytype: 'Azure Container Registry'
+#     dockerComposeFile: '**/docker-compose.yml'
+#     action: 'Run a Docker Compose command'
+#     dockerComposeCommand: 'up allure'
+    
+- task: CmdLine@2
   inputs:
-    containerregistrytype: 'Azure Container Registry'
-    dockerComposeFile: '**/docker-compose.yml'
-    action: 'Run a Docker Compose command'
-    dockerComposeCommand: 'up allure'
+    script: 'echo foo >.log'
 
