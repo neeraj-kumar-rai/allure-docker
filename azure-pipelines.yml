@@ -21,14 +21,15 @@ steps:
 #     testResultsFiles: '**/surefire-reports/TEST-*.xml'
 #     goals: 'test -Dtest=FirstTest'
     
-# - task: DockerCompose@0
-#   inputs:
-#     containerregistrytype: 'Azure Container Registry'
-#     dockerComposeFile: '**/docker-compose.yml'
-#     action: 'Run a Docker Compose command'
-#     dockerComposeCommand: 'up allure'
-    
-- task: CmdLine@2
+- task: DockerCompose@0
   inputs:
-    script: 'echo foo >.log'
+    containerregistrytype: 'Azure Container Registry'
+    dockerComposeFile: '**/docker-compose.yml'
+    action: 'Run a Docker Compose command'
+    dockerComposeCommand: 'docker run --user="$(id -u):$(id -g)" -p 5050:5050 -e CHECK_RESULTS_EVERY_SECONDS=3 -e KEEP_HISTORY="TRUE" \
+           -v ${PWD}/allure-results:/app/allure-results \
+           -v ${PWD}/allure-reports:/app/default-reports \
+           frankescobar/allure-docker-service'
+    
+-
 
